@@ -1,0 +1,22 @@
+{
+  "name": "trello-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edosjoy/trelllo-clone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edosjoy/trelllo-clone/issues"
+  },
+  "homepage": "https://github.com/edosjoy/trelllo-clone#readme",
+  "devDependencies": {
+    "sass": "^1.49.7"
+  }
+}
