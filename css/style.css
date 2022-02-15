@@ -5,13 +5,17 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+}
+
 .app {
   display: flex;
   flex-direction: column;
   width: 100vw;
   height: 100vh;
   padding: 50px 0;
-  background: url("/images/fon.jpg") center/cover no-repeat;
+  background-color: #333366;
 }
 .app .boards {
   display: flex;
@@ -31,6 +35,7 @@
 }
 .app .boards__item .title {
   padding: 5px;
+  color: #fff;
 }
 .app .boards__item .title:focus {
   outline: 1px solid rgba(168, 168, 168, 0.45);
@@ -53,6 +58,7 @@
 .app .boards__item .form {
   border-radius: 3px;
   margin-top: auto;
+  display: none;
 }
 .app .boards__item .form .textarea {
   resize: none;
@@ -62,9 +68,76 @@
   background: #fff;
   padding: 10px;
   width: 100%;
+  margin-bottom: 5px;
 }
 .app .boards__item .form .textarea:focus {
   outline: none;
+}
+.app .boards__item .form .buttons {
+  display: flex;
+}
+.app .boards__item .form .buttons .add__item-btn {
+  background: #0d88da;
+  border: none;
+  height: 35px;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  width: 100%;
+  font-size: 14px;
+}
+.app .boards__item .form .buttons .cancel__item-btn {
+  padding: 0 10px;
+  background: #a0110c;
+  border: none;
+  height: 35px;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75px;
+  margin-right: auto;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+.app .boards__item .add__btn {
+  height: 30px;
+  background: rgba(155, 155, 155, 0.3);
+  border-radius: 3px;
+  margin-top: 5px;
+  display: flex;
+  font-size: 12px;
+  align-items: center;
+  padding-left: 10px;
+  color: #fff;
+}
+.app .boards__item .add__btn span {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #fff;
+}
+.app .button {
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(19, 130, 204, 0.62);
+  border: none;
+  width: 150px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translate(-50%);
+  color: #fff;
+  border-radius: 3px;
+  font-size: 14px;
 }
 
 /*# sourceMappingURL=style.css.map */
