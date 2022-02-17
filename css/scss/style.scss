@@ -21,6 +21,7 @@ body {
     display: flex;
     width: 100%;
     &__item {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-self: baseline;
@@ -31,31 +32,49 @@ body {
       padding: 10px;
       transition: .3s all ease;
       border-radius: 3px;
+      .cross-board {
+        position: absolute;
+        font-size: 25px;
+        color: red;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+      }
       .title {
         padding: 5px;
         color: #fff;
+        cursor: pointer;
         &:focus {
           outline: 1px solid rgba(168, 168, 168, .45);
+          cursor: auto;
         }
       }
       .list {
-        min-height: 40px;
+        //min-height: 40px;
         &__item {
           background-color: #fefefe;
           border-radius: 3px;
           padding: 10px;
-          text-align: center;
-          margin: 4px 0;
+          text-align: left;
+          margin-top: 10px;
           cursor: pointer;
           font-weight: 400;
           font-size: 14px;
           outline: none;
           border: none;
+          position: relative;
+          .cross-card {
+            position: absolute;
+            right: 10px;
+            top: 8px;
+            color: #a0110c;
+            font-size: 20px;
+          }
         }
       }
       .form {
         border-radius: 3px;
-        margin-top: auto;
+        margin-top: 10px;
         display: none;
         .textarea {
           resize: none;
@@ -108,12 +127,13 @@ body {
         height: 30px;
         background: rgba(155, 155, 155, .3);
         border-radius: 3px;
-        margin-top: 5px;
+        margin-top: 10px;
         display: flex;
         font-size: 12px;
         align-items: center;
         padding-left: 10px;
         color: #fff;
+        cursor: pointer;
         span {
           font-size: 20px;
           margin-right: 10px;
