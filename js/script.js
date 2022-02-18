@@ -5,15 +5,21 @@ const
     btnAddBoard = document.querySelector('.button');
 
 boards.addEventListener('click', event => {
+
     const target = event.target;
 
     if (target.classList.contains('title')) {
+
         window.getSelection().selectAllChildren(target);
+
     } else if (target.classList.contains('cross-board')) {
+
         if (confirm('Удалить доску?')) {
             target.parentNode.remove();
         }
+
     } else if (target.classList.contains('add__btn')) {
+
         target.parentNode.childNodes.forEach(item => {
             if (item.classList && item.classList.contains('form')) {
                 item.style.display = 'block';
@@ -22,48 +28,47 @@ boards.addEventListener('click', event => {
                 item.style.display = 'none';
             }
         });
-    } else if (target.classList.contains('add__item-btn') && target.parentNode.parentNode.children[0].value !== '') {
+
+    } else if (target.classList.contains('add__item-btn') && target.closest('.form').children[0].value !== '') {
+
         let newCard = document.createElement('div');
         newCard.classList.add('list__item');
         newCard.setAttribute('draggable', 'true');
-        newCard.innerText = target.parentNode.parentNode.children[0].value;
-        target.parentNode.parentNode.parentNode.children[2].append(newCard);
-        target.parentNode.parentNode.parentNode.childNodes.forEach(item => {
-            if (item.classList && item.classList.contains('form')) {
-                item.style.display = 'none';
-            } else if (item.classList && item.classList.contains('add__btn')) {
-                item.style.display = 'block';
+        target.closest('.form').childNodes.forEach(item => {
+            if (item.classList && item.classList.contains('textarea')) {
+                newCard.innerText = item.value;
             }
         });
+        target.closest('.boards__item').childNodes.forEach(item => {
+            if (item.classList) {
+                if (item.classList.contains('list')) {
+                    item.append(newCard);
+                } else if (item.classList.contains('form')) {
+                    item.style.display = 'none';
+                } else if (item.classList.contains('add__btn')) {
+                    item.style.display = 'block';
+                }
+            }
+        });
+
     } else if (target.classList.contains('cancel__item-btn')) {
-        target.parentNode.parentNode.parentNode.childNodes.forEach(item => {
+
+        target.closest('.boards__item').childNodes.forEach(item => {
             if (item.classList && item.classList.contains('form')) {
                 item.style.display = 'none';
             } else if (item.classList && item.classList.contains('add__btn')) {
                 item.style.display = 'block';
             }
         });
+
     } else if (target.classList.contains('cross-card')) {
+
         if (confirm('Удалить карточку?')) {
             target.parentNode.remove();
         }
-    }
-});
 
-boards.addEventListener('dblclick', event => {
-    const target = event.target;
-
-    if (target.classList.contains('list__item')) {
-        target.parentNode.parentNode.childNodes.forEach(item => {
-            if (item.classList && item.classList.contains('form')) {
-                item.style.display = 'block';
-                item.children[0].value = target.innerText;
-            } else if (item.classList && item.classList.contains('add__btn')) {
-                item.style.display = 'none';
-            }
-        });
-        target.remove();
     }
+
 });
 
 btnAddBoard.addEventListener('click', event => {
