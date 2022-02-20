@@ -15,7 +15,6 @@ body {
   width: 100vw;
   height: 100vh;
   padding: 50px 0;
-  //background: url("/images/fon.jpg") center / cover no-repeat;
   background-color: #333366;
   .boards {
     display: flex;
@@ -50,7 +49,6 @@ body {
         }
       }
       .list {
-        //min-height: 40px;
         &__item {
           background-color: #fefefe;
           border-radius: 3px;
@@ -75,7 +73,6 @@ body {
       .form {
         border-radius: 3px;
         margin-top: 10px;
-        display: none;
         .textarea {
           resize: none;
           height: 60px;
@@ -87,6 +84,12 @@ body {
           margin-bottom: 5px;
           &:focus {
             outline: none;
+          }
+          }
+        .red {
+          &::-moz-placeholder, &::-webkit-input-placeholder {
+            color: red;
+            font-weight: 600;
           }
         }
         .buttons {

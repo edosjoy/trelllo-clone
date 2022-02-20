@@ -74,7 +74,6 @@ body {
 .app .boards__item .form {
   border-radius: 3px;
   margin-top: 10px;
-  display: none;
 }
 .app .boards__item .form .textarea {
   resize: none;
@@ -88,6 +87,10 @@ body {
 }
 .app .boards__item .form .textarea:focus {
   outline: none;
+}
+.app .boards__item .form .red::-moz-placeholder, .app .boards__item .form .red::-webkit-input-placeholder {
+  color: red;
+  font-weight: 600;
 }
 .app .boards__item .form .buttons {
   display: flex;
