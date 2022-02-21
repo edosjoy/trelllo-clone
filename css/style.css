@@ -51,6 +51,9 @@ body {
   outline: 1px solid rgba(168, 168, 168, 0.45);
   cursor: auto;
 }
+.app .boards__item .list {
+  height: 40px;
+}
 .app .boards__item .list__item {
   background-color: #fefefe;
   border-radius: 3px;

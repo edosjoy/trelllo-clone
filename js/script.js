@@ -2,12 +2,15 @@
 
 const
     boards = document.querySelector('.boards'),
+    itemsList = document.querySelector('.list'),
     btnAddBoard = document.querySelector('.button');
 
 let
     edit = false,
     editText = '',
     draggingCard = null;
+
+dropCard(itemsList);
 
 boards.addEventListener('click', e => {
     const t = e.target;
@@ -68,6 +71,7 @@ btnAddBoard.addEventListener('click', event => {
             <span>+</span>Добавить карточку
         </div>`;
     boards.append(newBoard);
+    dropCard(newBoard.querySelector('.list'));
 });
 
 function removeBoard(t) {
@@ -168,6 +172,20 @@ function dragCard(card) {
     })
 }
 
-function dropCard() {
+function dropCard(list) {
+    list.addEventListener('dragover', e => e.preventDefault());
 
+    list.addEventListener('dragenter', e => {
+        // e.preventDefault();
+        e.target.style.backgroundColor = 'rgba(0, 0, 0, .3)';
+    });
+
+    list.addEventListener('dragleave', e => {
+        e.target.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+    });
+
+    list.addEventListener('drop', e => {
+        e.target.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+        e.target.append(draggingCard);
+    });
 }
