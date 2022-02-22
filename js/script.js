@@ -36,19 +36,20 @@ boards.addEventListener('dblclick', e => {
 
     if (t.classList.contains('list__item')) {
         t.closest('.boards__item').childNodes.forEach(item => {
-            if (item.classList && item.classList.contains('form')) {
-                item.style.display = '';
-                editText = t.firstChild.textContent;
-                item.children[0].value = t.firstChild.textContent;
-                item.querySelector('.add__item-btn').innerText = 'Сохранить';
-                edit = true;
-            } else if (item.classList && item.classList.contains('add__btn')) {
-                item.style.display = 'none';
+            if (item.classList) {
+                if (item.classList.contains('form')) {
+                    item.style.display = '';
+                    editText = t.firstChild.textContent;
+                    item.children[0].value = t.firstChild.textContent;
+                    item.querySelector('.add__item-btn').innerText = 'Сохранить';
+                    edit = true;
+                } else if (item.classList.contains('add__btn')) {
+                    item.style.display = 'none';
+                }
             }
         });
         t.remove();
     }
-
 });
 
 btnAddBoard.addEventListener('click', event => {
@@ -82,13 +83,15 @@ function removeBoard(t) {
 
 function createCard(t) {
     t.parentNode.childNodes.forEach(item => {
-        if (item.classList && item.classList.contains('form')) {
-            item.style.display = '';
-            item.children[0].value = '';
-            item.children[0].classList.remove('red');
-            edit ? item.querySelector('.add__item-btn').innerText = 'Сохранить' : item.querySelector('.add__item-btn').innerText = 'Добавить карточку';
-        } else if (item.classList && item.classList.contains('add__btn')) {
-            item.style.display = 'none';
+        if (item.classList) {
+            if (item.classList.contains('form')) {
+                item.style.display = '';
+                item.children[0].value = '';
+                item.children[0].classList.remove('red');
+                edit ? item.querySelector('.add__item-btn').innerText = 'Сохранить' : item.querySelector('.add__item-btn').innerText = 'Добавить карточку';
+            } else if (item.classList.contains('add__btn')) {
+                item.style.display = 'none';
+            }
         }
     });
 }
@@ -129,22 +132,26 @@ function cancelCard(t) {
         newCard.setAttribute('draggable', 'true');
         newCard.innerText = editText;
         t.closest('.boards__item').childNodes.forEach(item => {
-            if (item.classList && item.classList.contains('list')) {
-                item.append(newCard);
-            } else if (item.classList && item.classList.contains('form')) {
-                item.style.display = 'none';
-                item.querySelector('.add__item-btn').innerText = 'Добавить карточку';
-            } else if (item.classList && item.classList.contains('add__btn')) {
-                item.style.display = '';
+            if (item.classList) {
+                if (item.classList.contains('list')) {
+                    item.append(newCard);
+                } else if (item.classList.contains('form')) {
+                    item.style.display = 'none';
+                    item.querySelector('.add__item-btn').innerText = 'Добавить карточку';
+                } else if (item.classList.contains('add__btn')) {
+                    item.style.display = '';
+                }
             }
         });
         edit = false;
     } else {
         t.closest('.boards__item').childNodes.forEach(item => {
-            if (item.classList && item.classList.contains('form')) {
-                item.style.display = 'none';
-            } else if (item.classList && item.classList.contains('add__btn')) {
-                item.style.display = '';
+            if (item.classList) {
+                if (item.classList.contains('form')) {
+                    item.style.display = 'none';
+                } else if (item.classList.contains('add__btn')) {
+                    item.style.display = '';
+                }
             }
         });
     }
@@ -169,7 +176,7 @@ function dragCard(card) {
         setTimeout(() => {
             card.style.display = '';
         }, 0);
-    })
+    });
 }
 
 function dropCard(list) {
