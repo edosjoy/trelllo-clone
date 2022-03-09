@@ -2,7 +2,6 @@
 
 const
     boards = document.querySelector('.boards'),
-    itemsList = document.querySelector('.list'),
     btnAddBoard = document.querySelector('.button');
 
 let
@@ -10,7 +9,16 @@ let
     editText = '',
     draggingCard = null;
 
-dropCard(itemsList);
+if (localStorage.getItem('boards')) {
+    const boards = JSON.parse(localStorage.getItem('boards'));
+    console.log(boards);
+
+    // console.log(Object.keys(boards));
+
+    for (const board in boards) {
+        addBoard(boards[board].nameBoard, boards[board].tasks);
+    }
+}
 
 boards.addEventListener('click', e => {
     const t = e.target;
@@ -54,12 +62,15 @@ boards.addEventListener('dblclick', e => {
 
 btnAddBoard.addEventListener('click', event => {
     event.preventDefault();
+    addBoard();
+});
 
+function addBoard(nameBoard = 'Введите название', tasks = []) {
     let newBoard = document.createElement('div');
     newBoard.classList.add('boards__item');
     newBoard.innerHTML = `
         <div class="cross-board">&#10006;</div>
-        <span contenteditable="true" class="title">Введите название</span>
+        <span contenteditable="true" class="title">${nameBoard}</span>
         <div class="list"></div>
         <div class="form" style="display: none;">
             <textarea class="textarea" placeholder="Введите название для этой карточки"></textarea>
@@ -73,7 +84,13 @@ btnAddBoard.addEventListener('click', event => {
         </div>`;
     boards.append(newBoard);
     dropCard(newBoard.querySelector('.list'));
-});
+
+    if (tasks.length > 0) {
+        tasks.forEach(task => {
+            addCard(newBoard.querySelector('.list'), task);
+        });
+    }
+}
 
 function removeBoard(t) {
     if (confirm('Удалить доску?')) {
@@ -96,32 +113,37 @@ function createCard(t) {
     });
 }
 
-function addCard(t) {
-    if (t.closest('.form').children[0].value === '') {
+function addCard(t, task = '') {
+    if (task === '' && t.closest('.form').children[0].value === '') {
         t.closest('.form').children[0].classList.add('red');
     } else {
         let newCard = document.createElement('div');
         newCard.classList.add('list__item');
         newCard.setAttribute('draggable', 'true');
         newCard.setAttribute('title', 'Double click to edit');
-        t.closest('.form').childNodes.forEach(item => {
-            if (item.classList && item.classList.contains('textarea')) {
-                newCard.innerHTML = `${item.value}<div class="cross-card">&#10006;</div>`;
-            }
-        });
-        t.closest('.boards__item').childNodes.forEach(item => {
-            if (item.classList) {
-                if (item.classList.contains('list')) {
-                    item.append(newCard);
-                } else if (item.classList.contains('form')) {
-                    item.style.display = 'none';
-                } else if (item.classList.contains('add__btn')) {
-                    item.style.display = '';
+        if (task === '') {
+            t.closest('.form').childNodes.forEach(item => {
+                if (item.classList && item.classList.contains('textarea')) {
+                    newCard.innerHTML = `${item.value}<div class="cross-card">&#10006;</div>`;
                 }
-            }
-        });
+            });
+            t.closest('.boards__item').childNodes.forEach(item => {
+                if (item.classList) {
+                    if (item.classList.contains('list')) {
+                        item.append(newCard);
+                    } else if (item.classList.contains('form')) {
+                        item.style.display = 'none';
+                    } else if (item.classList.contains('add__btn')) {
+                        item.style.display = '';
+                    }
+                }
+            });
+            edit = false;
+        } else {
+            newCard.innerHTML = `${task}<div class="cross-card">&#10006;</div>`;
+            t.append(newCard);
+        }
         dragCard(newCard);
-        edit = false;
     }
 }
 
@@ -184,15 +206,15 @@ function dropCard(list) {
 
     list.addEventListener('dragenter', e => {
         // e.preventDefault();
-        e.target.style.backgroundColor = 'rgba(0, 0, 0, .3)';
+        list.style.backgroundColor = 'rgba(0, 0, 0, .3)';
     });
 
     list.addEventListener('dragleave', e => {
-        e.target.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+        list.style.backgroundColor = 'rgba(0, 0, 0, 0)';
     });
 
     list.addEventListener('drop', e => {
-        e.target.style.backgroundColor = 'rgba(0, 0, 0, 0)';
-        e.target.append(draggingCard);
+        list.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+        list.append(draggingCard);
     });
 }
