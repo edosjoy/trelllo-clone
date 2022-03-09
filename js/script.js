@@ -7,16 +7,16 @@ const
 let
     edit = false,
     editText = '',
-    draggingCard = null;
+    draggingCard = null,
+    boardID = 1,
+    localBoards = JSON.parse(localStorage.getItem('boards'));
 
-if (localStorage.getItem('boards')) {
-    const boards = JSON.parse(localStorage.getItem('boards'));
-    console.log(boards);
+if (localBoards) {
+    console.log(localBoards);
 
-    // console.log(Object.keys(boards));
-
-    for (const board in boards) {
-        addBoard(boards[board].nameBoard, boards[board].tasks);
+    for (const board in localBoards) {
+        addBoard(localBoards[board].nameBoard, localBoards[board].tasks, true);
+        boardID++;
     }
 }
 
@@ -47,8 +47,7 @@ boards.addEventListener('dblclick', e => {
             if (item.classList) {
                 if (item.classList.contains('form')) {
                     item.style.display = '';
-                    editText = t.firstChild.textContent;
-                    item.children[0].value = t.firstChild.textContent;
+                    item.children[0].value = editText = t.firstChild.textContent;
                     item.querySelector('.add__item-btn').innerText = 'Сохранить';
                     edit = true;
                 } else if (item.classList.contains('add__btn')) {
@@ -65,7 +64,7 @@ btnAddBoard.addEventListener('click', event => {
     addBoard();
 });
 
-function addBoard(nameBoard = 'Введите название', tasks = []) {
+function addBoard(nameBoard = 'Введите название', tasks = [], local = false) {
     let newBoard = document.createElement('div');
     newBoard.classList.add('boards__item');
     newBoard.innerHTML = `
@@ -84,6 +83,14 @@ function addBoard(nameBoard = 'Введите название', tasks = []) {
         </div>`;
     boards.append(newBoard);
     dropCard(newBoard.querySelector('.list'));
+
+    if (!local) {
+        localBoards[`board${boardID++}`] = {
+            nameBoard: nameBoard,
+            tasks: [],
+        }
+        localStorage.boards = JSON.stringify(localBoards);
+    }
 
     if (tasks.length > 0) {
         tasks.forEach(task => {
